@@ -1,4 +1,5 @@
 const path = require('path');
+const provider = require('@truffle/hdwallet-provider');
 /**
  * Use this file to configure your truffle project. It's seeded with some
  * common settings for different networks and features like migrations,
@@ -37,17 +38,22 @@ module.exports = {
 
   contracts_build_directory: path.join('/Users/wheatwaves/code/learn-block/wallet', "client/src/contracts"),
   networks: {
-    // Useful for testing. The `development` name is special - truffle uses it by default
-    // if it's defined here and no other network is specified at the command line.
-    // You should run a client (like ganache-cli, geth or parity) in a separate terminal
-    // tab if you use this network and you must also set the `host`, `port` and `network_id`
-    // options below to some value.
-    //
-    development: {
-     host: "127.0.0.1",     // Localhost (default: none)
-     port: 8545,            // Standard Ethereum port (default: none)
-     network_id: "*",       // Any network (default: none)
-    },
+    kovan: {
+      provider: () =>
+        new provider(
+          [
+            '9d407053fea9cf5a38c77f41c1dd331672ecffb4d646f381ffd81f49120b0013', 
+            '7e6d354c90f7486d26b9659c74e28cbf3f7521112f1898ba4f33b20671a5bcf5', 
+            '2976d50b1a0f5710e2b09b7d536a2826661b3efc30e62cf677d55b8f80a3ffb2'
+          ],
+          'https://kovan.infura.io/v3/fb5bab9f6d38411f99cd66b5dcb40550',
+          0,
+          3
+        ),
+      network_id: 42
+    }
+  },
+
     // Another network with more advanced options...
     // advanced: {
     // port: 8777,             // Custom port
@@ -83,7 +89,7 @@ module.exports = {
   // Configure your compilers
   compilers: {
     solc: {
-      version: "0.6.0",    // Fetch exact version from solc-bin (default: truffle's version)
+      version: "0.8.0",    // Fetch exact version from solc-bin (default: truffle's version)
       // docker: true,        // Use "0.5.1" you've installed locally with docker (default: false)
       // settings: {          // See the solidity docs for advice about optimization and evmVersion
       //  optimizer: {
